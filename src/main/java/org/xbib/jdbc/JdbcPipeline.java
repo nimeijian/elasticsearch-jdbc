@@ -298,7 +298,7 @@ public class JdbcPipeline
         return states.contains(Context.State.IDLE) && states.size() == 1;
     }
 
-    // TODO: why this shit keeps return false? even job is running
+    // TODO: why this shit keeps return false? even job is running, let's add more comments on state
     public boolean isActive() {
         Set<Context.State> states = getStates();
         return states.contains(Context.State.FETCH)
