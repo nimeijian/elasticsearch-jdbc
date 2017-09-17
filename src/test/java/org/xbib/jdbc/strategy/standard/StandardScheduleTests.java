@@ -88,6 +88,7 @@ public class StandardScheduleTests extends AbstractSinkTest {
     }
 
     //TODO: why the result in Elasticsearch is not correspond to the hits we get after shutdown
+    // it works well on real ES server, but on mock test client/node and a local elasticsearch node started together, it always turn node red
     @Test
     @Parameters({"task-orders","task-products","task-customers"})
     public void testIntervalMultiImporter(String taskOrders, String taskProducts, String taskCustomers) throws Exception {
