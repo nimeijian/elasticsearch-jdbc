@@ -8,9 +8,6 @@
     <parameter name="password" value=""/>
 
     <test name="Test Jdbc input">
-        <parameter name="create" value="mysql/create-ordertables.sql"/>
-        <parameter name="delete" value="mysql/delete-ordertables.sql"/>
-        <parameter name="task8" value="mysql/task8.json"/>
         <classes>
             <class name="org.xbib.jdbc.input.InputTest"/>
         </classes>

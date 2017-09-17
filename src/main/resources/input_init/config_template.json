@@ -9,7 +9,7 @@
     "maxrows" : 50,
     "index" : "my_index",
     "type" : "my_type",
-    "index_settings" : "$index_settings",
-    "type_mapping" : "$type_mapping"
+    "index_settings" : null,
+    "type_mapping" : null
   }
 }

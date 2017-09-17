@@ -13,14 +13,6 @@ public class InputTest {
     public void testInputInit(){
         Input input = new InputImpl();
         input.init();
-//
-//        InputStream in = getClass().getResourceAsStream("config_template.json");
-//
-//        Settings settings = Settings.settingsBuilder()
-//                .loadFromStream("config_template", in)
-//                .build();
-//        System.out.println(settings.getAsMap());
-
         assertEquals("1", "1");
     }
 

@@ -3,8 +3,11 @@ package org.xbib.adapter.config;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Map;
+
 /**
  * Created by sanyu on 2017/8/19.
+ * single field type will
  */
 public class JdbcConfigInfo {
 
@@ -20,6 +23,30 @@ public class JdbcConfigInfo {
 
     private String interval = "5s";
 
+    @SerializedName("index_settings")
+    @JsonProperty("index_settings")
+    private Map<String, Object> indexSettingsInfo;
+
+    @SerializedName("type_mapping")
+    @JsonProperty("type_mapping")
+    private Map<String, Object> typeMappingInfo;
+
+
+    public Map<String, Object> getTypeMappingInfo() {
+        return typeMappingInfo;
+    }
+
+    public void setTypeMappingInfo(Map<String, Object> typeMappingInfo) {
+        this.typeMappingInfo = typeMappingInfo;
+    }
+
+    public Map<String, Object> getIndexSettingsInfo() {
+        return indexSettingsInfo;
+    }
+
+    public void setIndexSettingsInfo(Map<String, Object> indexSettingsInfo) {
+        this.indexSettingsInfo = indexSettingsInfo;
+    }
 
     public String getUrl() {
         return url;
