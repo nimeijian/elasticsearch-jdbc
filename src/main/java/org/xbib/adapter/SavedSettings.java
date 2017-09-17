@@ -8,12 +8,14 @@ import java.util.Map;
 /**
  * Created by sanyu on 2017/8/26.
  */
+
+//TODO rename to SettingsService, and integrate with JPA to save and get settings
 public class SavedSettings {
 
     private static Map<String, Settings> settingsMap = new HashMap<>();
 
     public static void init(){
-        // TODO: init settingsMap
+        // TODO: init settingsMap for saved settings in database
     }
 
     public static Map<String, Settings> getSettingsMap() {

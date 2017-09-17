@@ -18,7 +18,6 @@ import static org.elasticsearch.common.settings.Settings.settingsBuilder;
 public class JdbcPipelineAdapter {
 
     public static void main(String[] args) throws Exception {
-        // todo: get config data from config page, currently it's a mockup
         ElasticsearchConfigInfo elasticsearchConfigInfo = new ElasticsearchConfigInfo();
         JdbcConfigInfo jdbcConfigInfo = new JdbcConfigInfo();
         jdbcConfigInfo.setElasticsearchConfigInfo(elasticsearchConfigInfo);

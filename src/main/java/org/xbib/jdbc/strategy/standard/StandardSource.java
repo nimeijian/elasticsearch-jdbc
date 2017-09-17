@@ -52,14 +52,7 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * Standard source implementation.
@@ -1794,8 +1787,8 @@ public class StandardSource<C extends StandardContext> implements JDBCSource<C> 
         return Types.OTHER;
     }
 
-    private String mapColumnName(String columnName) {
-        // TODO JDK8: StringJoiner
+    @Deprecated
+    private String mapColumnNameDepecatedByUsingStringJoiner(String columnName) {
         Map<String, Object> columnNameMap = getColumnNameMap();
         StringBuilder sb = new StringBuilder();
         String[] s = columnName.split("\\.");
@@ -1811,6 +1804,20 @@ public class StandardSource<C extends StandardContext> implements JDBCSource<C> 
             sb.append(s[i]);
         }
         return sb.toString();
+    }
+
+    private String mapColumnName(String columnName) {
+        Map<String, Object> columnNameMap = getColumnNameMap();
+        StringJoiner joiner = new StringJoiner(".");
+        String[] s = columnName.split("\\.");
+        for (int i = 0; i < s.length; i++) {
+            if (columnNameMap.containsKey(s[i])) {
+                joiner.add(columnNameMap.get(s[i]).toString());
+            } else {
+                logger.warn("no column map entry for {} in map {}", s[i], columnNameMap);
+            }
+        }
+        return joiner.toString();
     }
 
     private String formatDate(long millis) {
