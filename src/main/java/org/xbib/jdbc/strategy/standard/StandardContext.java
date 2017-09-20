@@ -182,6 +182,7 @@ public class StandardContext<S extends JDBCSource> implements Context<S, Sink> {
     @SuppressWarnings("unchecked")
     public void beforeFetch() throws Exception {
         logger.debug("before fetch");
+        // TODO: WTK is this, can we just use get/set to do it, make it consist
         Sink sink = createSink();
         S source = createSource();
         prepareContext(source, sink);
