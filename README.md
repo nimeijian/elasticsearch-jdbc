@@ -6,36 +6,12 @@ indexing into [Elasticsearch](http://www.elasticsearch.org).
 The JDBC importer is hard to use. In this version, only care about transfer data to ES and add ability for tracking and recover data.
 ### TODO: separate ES config to json and sync sql to sql script file
 
-Assuming you have a table of name `orders` with a primary key in column `id`, 
-you can issue this from the command line
-
-    bin=$JDBC_IMPORTER_HOME/bin
-    lib=$JDBC_IMPORTER_HOME/lib
-    echo '{
-        "type" : "jdbc",
-        "jdbc" : {
-            "url" : "jdbc:mysql://localhost:3306/test",
-            "user" : "",
-            "password" : "",
-            "sql" : "select *, id as _id from orders"
-        }
-    }' | java \
-           -cp "${lib}/*" \
-           -Dlog4j.configurationFile=${bin}/log4j2.xml \
-           org.xbib.tools.Runner \
-           org.xbib.jdbc.JdbcPipeline
-
-And that's it. Now you can check your Elasticsearch cluster for the index `jdbc` or your Elasticsearch logs
-about what happened.
-
-
-
 # Documentation
 
 The relational data is internally transformed into structured JSON objects for the schema-less
 indexing model of Elasticsearch documents.
 
-The importer can fetch data from RDBMS while multithreaded bulk mode ensures high throughput when 
+The importer can fetch data from RDBMS while multi-threaded bulk mode ensures high throughput when
 indexing to Elasticsearch.
 
 ## JDBC importer definition file
@@ -63,31 +39,6 @@ Example:
             ...	         
 	    }
 	}
-
-The importer can either be executed via stdin (for example with echo)
-
-    bin=$JDBC_IMPORTER_HOME/bin
-    lib=$JDBC_IMPORTER_HOME/lib
-    echo '{
-      ...
-    }' | java \
-		-cp "${lib}/*" \
-		-Dlog4j.configurationFile=${bin}/log4j2.xml \
-		org.xbib.tools.Runner \
-		org.xbib.jdbc.JdbcPipeline
-
-or with explicit file name parameter from command line. Here is an example
-where `statefile.json` is a file which is loaded before execution.
-
-	java \
-		-cp "${lib}/*" \
-		-Dlog4j.configurationFile=${bin}/log4j2.xml \
-		org.xbib.tools.Runner \
-		org.xbib.jdbc.JdbcPipeline \
-		statefile.json
-
-This style is convenient for subsequent execution controlled by the `statefile` parameter
-if `statefile` is set to `statefile.json`.
 
 ### Parameters
 

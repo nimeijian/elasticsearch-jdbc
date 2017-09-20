@@ -86,6 +86,11 @@ public class StandardContext<S extends JDBCSource> implements Context<S, Sink> {
     @Override
     public StandardContext setSettings(Settings settings) {
         this.settings = settings;
+        setMetrics(settings);
+        return this;
+    }
+
+    private void setMetrics(Settings settings) {
         if (settings.getAsBoolean("metrics.enabled",false) && futures.isEmpty()) {
             Thread thread = new MetricsThread();
             ScheduledThreadPoolExecutor scheduledthreadPoolExecutor =
@@ -94,7 +99,6 @@ public class StandardContext<S extends JDBCSource> implements Context<S, Sink> {
                     settings.getAsTime("metrics.interval", TimeValue.timeValueSeconds(30)).seconds(), TimeUnit.SECONDS));
             logger.info("metrics thread started");
         }
-        return this;
     }
 
     @Override
@@ -106,6 +110,11 @@ public class StandardContext<S extends JDBCSource> implements Context<S, Sink> {
     public StandardContext setSource(S source) {
         logger.debug("set Source");
         this.source = source;
+        setSourceMetrics(source);
+        return this;
+    }
+
+    private void setSourceMetrics(S source) {
         Map<String,String> map = settings.getAsMap();
         if (map.containsKey("metrics.lastexecutionstart")) {
             DateTime lastexecutionstart = DateTime.parse(settings.get("metrics.lastexecutionstart"));
@@ -123,7 +132,6 @@ public class StandardContext<S extends JDBCSource> implements Context<S, Sink> {
                 source.getMetric().setCounter(counter);
             }
         }
-        return this;
     }
 
     @Override
@@ -299,7 +307,7 @@ public class StandardContext<S extends JDBCSource> implements Context<S, Sink> {
     }
 
     @SuppressWarnings("unchecked")
-    protected void prepareContext(S source, Sink sink) throws IOException {
+    private void prepareContext(S source, Sink sink) throws IOException {
         Map<String, Object> params = settings.getAsStructuredMap();
         List<SQLCommand> sql = SQLCommand.parse(params);
         String rounding = XContentMapValues.nodeStringValue(params.get("rounding"), null);
